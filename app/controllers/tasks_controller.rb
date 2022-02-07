@@ -21,17 +21,14 @@ class TasksController < ApplicationController
   end
 
   # POST /tasks or /tasks.json
-  def create
-    @task = Task.new(task_params)
-    @task.project = @project
-
+  def create   
     respond_to do |format|
-      if @task.save
-        format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
+      if task = task_service.create(task_params, project: @project)
+        format.html { redirect_to project_task_url(@project, task), notice: "Task was successfully created." }
+        format.json { render :show, status: :created, location: task }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        format.json { render json: task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -39,23 +36,39 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @task }
+      if task = task_service.update(task_params, task_id: params[:id].to_i)
+        format.html { redirect_to project_task_url(@project, task), notice: "Task was successfully updated." }
+        format.json { render :show, status: :ok, location: task }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        format.json { render json: task.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
-    @task.destroy
+    task_service.destroy(task_id: params[:id].to_i, project_id: @project.id)
 
     respond_to do |format|
       format.html { redirect_to project_tasks_url(@project), notice: "Task was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def change_status
+    begin
+      task_service.change_status(task_id: params[:task_id].to_i)
+
+      respond_to do |format|
+        format.html { redirect_to project_tasks_url(@project), notice: "Task was successfully updated." }
+        format.json { head :no_content }
+      end
+    rescue TaskNotFoundException => e
+      respond_to do |format|
+        format.html { redirect_to project_tasks_url(@project), notice: e.message }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -72,5 +85,9 @@ class TasksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def task_params
       params.require(:task).permit(:title, :date_start, :date_end, :state)
+    end
+
+    def task_service
+      TaskService.new
     end
 end

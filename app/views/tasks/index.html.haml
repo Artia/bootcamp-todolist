@@ -17,7 +17,7 @@
         %td= task.title
         %td= task.date_start
         %td= task.date_end
-        %td= task.human_state
+        %td= link_to task.human_state, project_task_change_status_path(@project, task), data: { turbo_method: :put, turbo_confirm: "Are you sure?" }
         %td= link_to 'Show', project_task_path(@project, task)
         %td= link_to 'Edit', edit_project_task_path(@project, task)
         %td= link_to 'Destroy', project_task_path(@project, task), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }

@@ -7,6 +7,6 @@
   %b Completed percent:
   = @project.completed_percent
 
-= link_to 'Edit', edit_project_path(@project)
+= link_to 'Edit', edit_project_path(@project), class: 'btn btn-dark'
 \|
-= link_to 'Back', projects_path
+= link_to 'Back', projects_path, class: 'btn btn-light'

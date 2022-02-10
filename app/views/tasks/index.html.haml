@@ -19,25 +19,22 @@
         %td= task.date_end
         %td
           = link_to project_task_change_status_path(@project, task), data: { turbo_method: :put, turbo_confirm: "Are you sure?" } do 
-            %span.material-icons{title: task.human_state}
-              - if task.state
-                done 
-              - else
-                pending_actions
-    
+            - state = task.state ? "task_alt" : "pending_actions"
+            %span.material-icons.color{title: task.human_state, class: state}
+              = state
         %td
           = link_to project_task_path(@project, task) do 
-            %span.material-icons{title: 'Show'}
+            %span.material-icons.color{title: 'Show'}
               visibility
             
         %td
           = link_to edit_project_task_path(@project, task) do
-            %span.material-icons{title: 'Edit'}
+            %span.material-icons.color{title: 'Edit'}
               edit
         
         %td
           = link_to project_task_path(@project, task), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do
-            %span.material-icons{title: 'Destroy'}
+            %span.material-icons.color{title: 'Destroy'}
               delete_outline
 
 %br

@@ -4,15 +4,19 @@
   .mb-3
     = f.label :title, class: 'form-label'
     = f.text_field :title, class: 'form-control'
+
   .mb-3
     = f.label :date_start, class: 'form-label'
     = f.datetime_field :date_start, class: 'form-control'
+
   .mb-3
     = f.label :date_end, class: 'form-label'
     = f.datetime_field :date_end, class: 'form-control'
-  .mb-3
-    = f.check_box :state
+
+  .mb-3.form-check.form-switch
+    = f.check_box :state, class: 'form-check-input'
     = f.label :state
+
   .mb-3
     = f.submit 'Save', class: "btn btn-dark"
     = link_to 'Back', project_tasks_path(@project), class: "btn btn-light"

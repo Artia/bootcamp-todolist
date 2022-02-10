@@ -23,8 +23,7 @@
               %a.nav-link.text-white{:href => projects_path} Projetos
     .container-md.main
       - flash.each do |type, message|
-        - class_name = class_name(type)
-        %div{class: class_name}
+        %div{class: class_name(type)}
           = message
 
       = yield

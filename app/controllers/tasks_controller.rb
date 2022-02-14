@@ -21,11 +21,13 @@ class TasksController < ApplicationController
   end
 
   # POST /tasks or /tasks.json
-  def create   
+  def create  
+    @task = task_service.create(task_params, project: @project)
+ 
     respond_to do |format|
-      if task = task_service.create(task_params, project: @project)
-        format.html { redirect_to project_task_url(@project, task), notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: task }
+      if @task.id.present?
+        format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully created." }
+        format.json { render :show, status: :created, location: @task }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: task.errors, status: :unprocessable_entity }
@@ -74,20 +76,20 @@ class TasksController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params[:id])
-    end
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
-    def set_project
-      @project = Project.find(params[:project_id])
-    end
+  def set_project
+    @project = Project.find(params[:project_id])
+  end
 
     # Only allow a list of trusted parameters through.
-    def task_params
-      params.require(:task).permit(:title, :date_start, :date_end, :state)
-    end
+  def task_params
+    params.require(:task).permit(:title, :date_start, :date_end, :state)
+  end
 
-    def task_service
-      TaskService.new
-    end
+  def task_service
+    TaskService.new
+  end
 end

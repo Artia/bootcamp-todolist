@@ -14,7 +14,7 @@ class Task < ApplicationRecord
   private
 
   def validate_dates
-    if self.date_start > self.date_end
+    if self.date_start.present? && self.date_end.present? && self.date_start > self.date_end
       self.errors.add(:date_start, 'cannot be greater than the end date')
     end
   end

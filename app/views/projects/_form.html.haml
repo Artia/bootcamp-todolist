@@ -1,16 +1,10 @@
 = form_for @project do |f|
-  - if @project.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
-      %ul
-        - @project.errors.full_messages.each do |message|
-          %li= message
+  = render partial: 'layouts/error_explanation', locals: { object: @project }
 
   .field
     = f.label :title, class: 'form-label'
     = f.text_field :title, class: 'form-control'
-  .field
-    = f.label :completed_percent, class: 'form-label'
-    = f.text_field :completed_percent, class: 'form-control'
-  .actions
-    = f.submit 'Save', class: 'btn btn-primary'
+
+  .actions.mt-4
+    = f.submit 'Save', class: 'btn btn-dark'
+    = link_to 'Back', projects_path, class: 'btn btn-light'

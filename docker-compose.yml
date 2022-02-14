@@ -18,11 +18,11 @@ services:
     stdin_open: true
     tty: true # Enables debugging capabilities when attached to this container.
     build: .
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: bundle exec rails s -p 3001 -b '0.0.0.0'
     volumes: 
       - ".:/app"
     ports: 
-      - "3000:3000"
+      - "3001:3001"
     depends_on:
       - db
     links:

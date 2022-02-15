@@ -8,7 +8,6 @@ class ProjectService < ApplicationService
       end
     end
 
-    #testar
     def completed_percent(project_id:)
       # Calculando pelo ruby
       # tasks = Task.where(project_id: project_id)

@@ -28,7 +28,8 @@ RSpec.describe 'ProjectService', type: :model do
     end
 
     it 'projeto com 6 atividade(s) pendente(s) e 1 encerrada(s)' do
-      allow(Task).to receive_message_chain(:select, :where, :first) { double('Task', total_tasks: 7, tasks_concluded: 1) }
+      #allow(Task).to receive_message_chain(:select, :where, :first) { double('Task', total_tasks: 7, tasks_concluded: 1) }
+      allow(@project_service).to receive(:info_tasks).with(project_id: @project_id).and_return(double('Task', total_tasks: 7, tasks_concluded: 1))
       expect(@project_service.completed_percent(project_id: 1).round(2)).to eq(14.29)
     end
   end

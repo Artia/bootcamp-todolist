@@ -48,10 +48,11 @@ RSpec.describe 'Task', type: :model do
 
     context 'tarefa válida' do
       before do
-        project = Project.create(title: 'Projeto1') #double
+        project = Project.new(title: 'Projeto1')
+        project.stub(:save).and_return(true)
 
         @task.title = "Tarefa válida"
-        @task.project_id = project.id
+        @task.project = project
         @task.date_start = Time.now
         @task.date_end = Time.now + 2.days
       end
@@ -81,5 +82,4 @@ RSpec.describe 'Task', type: :model do
 end
 
 #usar let
-#verificar para não criar o objeto
 

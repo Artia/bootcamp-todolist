@@ -20,11 +20,15 @@ RSpec.describe 'Task', type: :model do
         #https://apidock.com/rails/v6.1.3.1/ActiveModel/Errors/added%3F
         expect(@task.errors.added?(:title, :too_long, count: 255)).to eq(true)
       end
+      # describe User do
+      #   it { should validate_length_of(:password).is_at_least(8).with_message(/password is too short/) }
+      # end
     end
 
     context 'datas' do
       it 'não é válida sem data de início' do
-        @task.valid?
+        #@task.valid?
+        #it { is_expected.to validate_presence_of(:title) }
         expect(@task.errors.added?(:date_start, :blank)).to eq(true)
       end
   
@@ -44,7 +48,7 @@ RSpec.describe 'Task', type: :model do
 
     context 'tarefa válida' do
       before do
-        project = Project.create(title: 'Projeto1')
+        project = Project.create(title: 'Projeto1') #double
 
         @task.title = "Tarefa válida"
         @task.project_id = project.id
@@ -75,3 +79,7 @@ RSpec.describe 'Task', type: :model do
     end
   end
 end
+
+#usar let
+#verificar para não criar o objeto
+

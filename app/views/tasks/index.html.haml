@@ -19,6 +19,7 @@
         %td= task.date_end
         %td
           = link_to project_task_change_status_path(@project, task), data: { turbo_method: :put, turbo_confirm: "Are you sure?" } do 
+            // deixar aqui, passar para o model com os stags
             - state = task.state ? "task_alt" : "pending_actions"
             %span.material-icons.color{title: task.human_state, class: state}
               = state

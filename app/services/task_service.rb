@@ -22,7 +22,6 @@ class TaskService < ApplicationService
 
   def change_status(task_id:)
     task = find_task(task_id: task_id)
-    raise TaskNotFoundException if task.blank?
     task_update(task, state: !task.state)
     update_project_completed_percent(project_id: task.project_id)
   end
@@ -30,7 +29,10 @@ class TaskService < ApplicationService
   private
 
   def find_task(task_id:)
-    Task.find_by(id: task_id)
+    task = Task.find_by(id: task_id)
+    raise TaskNotFoundException if task.blank?
+
+    task
   end
 
   def task_update(task, args)

@@ -33,7 +33,44 @@ RSpec.describe TasksController, type: :controller do
   end
 
   describe 'POST#create' do
-    #{"authenticity_token"=>"[FILTERED]", "task"=>{"title"=>"tarefa 1", "date_start"=>"2022-03-15T08:00", "date_end"=>"2022-03-16T10:00", "state"=>"1"}, "commit"=>"Save", "project_id"=>"43"}
+    context 'sucesso' do
+      before do
+        @params = { task: { title: 'tarefa1', date_start: '2022-03-15T08:00', date_end: '2022-03-16T09:00', state: '0' }, project_id: project.id }
+      end
+
+      it 'deve criar um registro' do
+        expect {  
+          post :create, params: @params 
+        }.to change(Task, :count).by(1)
+      end
+
+      it 'retorna mensagem de sucesso' do
+        post :create, params: @params 
+        expect(response.request.flash[:notice]).to eq('Task was successfully created.')
+      end
+    end
+
+    context 'erro' do
+      before do
+        @params = { task: { title: '', date_start: '2022-03-15T08:00', date_end: '2022-03-16T09:00', state: '0' }, project_id: project.id }
+      end
+
+      it 'não deve criar um registro' do
+        expect {  
+          post :create, params: @params 
+        }.to change(Task, :count).by(0)
+      end
+
+      it 'retorna status 422' do
+        post :create, params: @params
+        expect(response.status).to eq(422)
+      end
+
+      xit 'renderiza o template new' do
+        post :create, params: @params
+        expect(response).to render_template(:new)
+      end
+    end
   end
 
   describe 'GET#show' do
@@ -65,6 +102,31 @@ RSpec.describe TasksController, type: :controller do
   end
 
   describe 'PATCH#update' do
+    context 'sucesso' do
+      before do
+        @params = { task: { title: "tarefa1", date_start: "2022-03-15T08:00", date_end: "2022-03-16T09:00", state: "1" }, project_id: project.id, id: task.id }
+        patch :update, params: @params 
+      end
+
+      it 'retorna mensagem de sucesso' do
+        expect(response.request.flash[:notice]).to eq('Task was successfully updated.')
+      end
+    end
+
+    context 'erro' do
+      before do
+        @params = { task: { title: "tarefa1", date_start: "2022-03-15T08:00", date_end: "2022-03-14T09:00", state: "1" }, project_id: project.id, id: task.id }
+        patch :update, params: @params 
+      end
+
+      it 'retorna status 422' do
+        expect(response.status).to eq(422)
+      end
+
+      xit 'renderiza o template edit' do
+        expect(response).to render_template(:edit)
+      end
+    end
   end
 
   describe 'DELETE#destroy' do
@@ -81,5 +143,28 @@ RSpec.describe TasksController, type: :controller do
   end
 
   describe 'PUT#change_status' do
+    context 'sucesso' do
+      before do
+        put :change_status, params: { project_id: project.id, task_id: task.id }
+      end
+
+      it 'encerra a tarefa' do
+        expect(task.reload.state).to eq(true)
+      end
+
+      it 'retorna mensagem de sucesso' do
+        expect(response.request.flash[:notice]).to eq('Task was successfully updated.')
+      end
+    end
+
+    context 'erro' do
+      before do
+        put :change_status, params: { project_id: project.id, task_id: 99999 }
+      end
+
+      it 'retorna mensagem de erro para tarefa não encontrada' do
+        expect(response.request.flash[:alert]).to eq('Task not found')
+      end
+    end
   end
 end

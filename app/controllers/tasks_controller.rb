@@ -38,12 +38,13 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     respond_to do |format|
-      if task = task_service.update(task_params, task_id: params[:id].to_i)
-        format.html { redirect_to project_task_url(@project, task), notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: task }
+      @task = task_service.update(task_params, task_id: params[:id].to_i)
+      if @task.valid?
+        format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully updated." }
+        format.json { render :show, status: :ok, location: @task }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: task.errors, status: :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -68,7 +69,7 @@ class TasksController < ApplicationController
       end
     rescue TaskNotFoundException => e
       respond_to do |format|
-        format.html { redirect_to project_tasks_url(@project), notice: e.message }
+        format.html { redirect_to project_tasks_url(@project), alert: e.message }
         format.json { head :no_content }
       end
     end

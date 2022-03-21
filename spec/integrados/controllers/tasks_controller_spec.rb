@@ -13,7 +13,7 @@ RSpec.describe TasksController, type: :controller do
       expect(response.status).to eq(200)
     end
 
-    xit 'renderiza o template index' do
+    it 'renderiza o template index' do
       expect(response).to render_template(:index)
     end
   end
@@ -27,7 +27,7 @@ RSpec.describe TasksController, type: :controller do
       expect(response.status).to eq(200)
     end
 
-    xit 'renderiza o template new' do
+    it 'renderiza o template new' do
       expect(response).to render_template(:new)
     end
   end
@@ -66,7 +66,7 @@ RSpec.describe TasksController, type: :controller do
         expect(response.status).to eq(422)
       end
 
-      xit 'renderiza o template new' do
+      it 'renderiza o template new' do
         post :create, params: @params
         expect(response).to render_template(:new)
       end
@@ -82,7 +82,7 @@ RSpec.describe TasksController, type: :controller do
       expect(response.status).to eq(200)
     end
 
-    xit 'renderiza o template show' do
+    it 'renderiza o template show' do
       expect(response).to render_template(:show)
     end
   end
@@ -96,7 +96,7 @@ RSpec.describe TasksController, type: :controller do
       expect(response.status).to eq(200)
     end
 
-    xit 'renderiza o template edit' do
+    it 'renderiza o template edit' do
       expect(response).to render_template(:edit)
     end
   end
@@ -123,7 +123,7 @@ RSpec.describe TasksController, type: :controller do
         expect(response.status).to eq(422)
       end
 
-      xit 'renderiza o template edit' do
+      it 'renderiza o template edit' do
         expect(response).to render_template(:edit)
       end
     end

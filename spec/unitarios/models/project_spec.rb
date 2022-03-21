@@ -5,7 +5,7 @@ RSpec.describe Project, type: :model do
   let(:project) { Project.new }
 
   describe 'associações' do
-    xit { is_expected.to have_many(:tasks).dependent(:destroy) }
+    it { is_expected.to have_many(:tasks).dependent(:destroy) }
   end
 
   describe 'validações' do

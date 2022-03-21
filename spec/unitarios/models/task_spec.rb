@@ -5,18 +5,18 @@ RSpec.describe Task, type: :model do
   let(:task) { Task.new }
 
   describe 'associação' do
-    xit { is_expected.to belong_to(:project) }
+    it { is_expected.to belong_to(:project) }
   end
 
   describe 'validações' do
     context 'título' do
-      xit { is_expected.to validate_presence_of(:title) }
-      xit { is_expected.to validate_length_of(:title).is_at_least(255).with_message(/title is too long/)  }
+      it { is_expected.to validate_presence_of(:title) }
+      it { is_expected.to validate_length_of(:title).is_at_least(255).with_message(/title is too long/)  }
     end
 
     context 'datas' do
-      xit { is_expected.to validate_presence_of(:date_start) }
-      xit { is_expected.to validate_presence_of(:date_end) }
+      it { is_expected.to validate_presence_of(:date_start) }
+      it { is_expected.to validate_presence_of(:date_end) }
 
       it 'data de início não pode ser maior que a data de fim' do
         task.date_start = Time.now

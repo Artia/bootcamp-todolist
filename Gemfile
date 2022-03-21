@@ -78,6 +78,10 @@ group :test do
   gem 'faker'
   gem 'machinist'
   gem 'mocha', require: false
+  gem 'simplecov'
+  gem 'rails-controller-testing'
+  gem 'shoulda'
+  gem 'shoulda-matchers'
 end
 
 gem "bootstrap"

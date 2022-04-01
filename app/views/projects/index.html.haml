@@ -1,0 +1,39 @@
+%h1 Listing projects
+
+%table.table
+  %thead
+    %tr
+      %th Título
+      %th %Completo
+      %th
+      %th
+      %th
+      %th
+
+  %tbody
+    - @projects.each do |project|
+      %tr
+        %td= project.title
+        %td= project.completed_percent
+        %td
+          = link_to project_tasks_path(project) do
+            %span.material-icons.color{title: 'Tasks'}
+              assignment
+
+        %td
+          = link_to project do
+            %span.material-icons.color{title: 'Show'}
+              visibility
+
+        %td
+          = link_to edit_project_path(project) do
+            %span.material-icons.color{title: 'Edit'}
+              edit
+
+        %td
+          = link_to project, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do
+            %span.material-icons.color{title: 'Destroy'}
+              delete_outline
+%br
+
+= link_to 'Novo Projeto', new_project_path, { class: "btn btn-dark" }

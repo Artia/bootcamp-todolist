@@ -1,0 +1,10 @@
+= form_for @project do |f|
+  = render partial: 'layouts/error_explanation', locals: { object: @project }
+
+  .field
+    = f.label :title, class: 'form-label'
+    = f.text_field :title, class: 'form-control'
+
+  .actions.mt-4
+    = f.submit 'Save', class: 'btn btn-dark'
+    = link_to 'Back', projects_path, class: 'btn btn-light'

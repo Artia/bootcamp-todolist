@@ -1,0 +1,43 @@
+%h1 Listing tasks
+
+%table.table
+  %thead
+    %tr
+      %th Title
+      %th Date start
+      %th Date end
+      %th State
+      %th
+      %th
+      %th
+
+  %tbody
+    - @tasks.each do |task|
+      %tr
+        %td= task.title
+        %td= task.date_start
+        %td= task.date_end
+        %td
+          = link_to project_task_change_status_path(@project, task), data: { turbo_method: :put, turbo_confirm: "Are you sure?" } do 
+            // deixar aqui, passar para o model com os stags
+            - state = task.state ? "task_alt" : "pending_actions"
+            %span.material-icons.color{title: task.human_state, class: state}
+              = state
+        %td
+          = link_to project_task_path(@project, task) do 
+            %span.material-icons.color{title: 'Show'}
+              visibility
+            
+        %td
+          = link_to edit_project_task_path(@project, task) do
+            %span.material-icons.color{title: 'Edit'}
+              edit
+        
+        %td
+          = link_to project_task_path(@project, task), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do
+            %span.material-icons.color{title: 'Destroy'}
+              delete_outline
+
+%br
+
+= link_to 'New Task', new_project_task_path, class: "btn btn-dark"

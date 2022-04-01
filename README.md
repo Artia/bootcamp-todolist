@@ -1,24 +1,24 @@
-# README
+### Clonar o esqueleto do projeto
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```bash
+    git clone git@github.com:Artia/bootcamp-todolist.git
+```
+### Executar o projeto com docker
 
-Things you may want to cover:
+```bash
+    sudo docker-compose up
+```
 
-* Ruby version
+Para acessar a aplicação acesse no navegador http://localhost:3000
 
-* System dependencies
+### Abrir o terminal do container
 
-* Configuration
+```bash
+    sudo docker-compose exec app /bin/bash
+```
 
-* Database creation
+### Abrir attach da aplicação
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+    sudo docker attach todolist_app
+```

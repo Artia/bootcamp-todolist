@@ -36,6 +36,7 @@ RSpec.describe 'TaskService', type: :model do
         @task = @task_service.update(@params, task_id: task.id)
       end
 
+      # DESAFIO
       it 'valida os atributos da tarefa atualizada' do
         expect(task.reload).to have_attributes(
           date_start: Time.zone.parse('2022-03-08 08:00'), 
@@ -63,6 +64,7 @@ RSpec.describe 'TaskService', type: :model do
       end
     end
 
+    # DESAFIO
     context 'erro' do
       it 'tarefa não encontrada' do
         expect { 
@@ -86,6 +88,7 @@ RSpec.describe 'TaskService', type: :model do
       end
     end
 
+    # DESAFIO
     context 'erro' do
       it 'tarefa não encontrada' do
         expect { 

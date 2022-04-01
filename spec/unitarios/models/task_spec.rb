@@ -50,11 +50,13 @@ RSpec.describe Task, type: :model do
       expect(task.human_state).to eq('Pending')
     end
 
+    # Desafio
     it 'retorna Pending para tarefa pendente (state: 0)' do
       task.state = 0
       expect(task.human_state).to eq('Pending')
     end
-
+    
+    # Desafio
     it 'retorna Concluded para tarefa encerrada (state: 1)' do
       task.state = 1
       expect(task.human_state).to eq('Concluded')

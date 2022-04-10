@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @task.title
+%p
+  %b Date start:
+  = @task.date_start
+%p
+  %b Date end:
+  = @task.date_end
+%p
+  %b State:
+  = @task.state
+
+= link_to 'Edit', edit_project_task_path(@project, @task)
+\|
+= link_to 'Back', project_tasks_path(@project)

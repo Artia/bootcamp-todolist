@@ -1,0 +1,28 @@
+%h1 Listing projects
+
+%table.table
+  %thead
+    %tr
+      %th Title
+      %th Completed percent
+      %th
+      %th
+      %th
+
+  %tbody
+    - @projects.each do |project|
+      %tr
+        %td= project.title
+        -if (project.completed_percent === nil)
+          %td= "0%" 
+        -else
+          %td= "#{Integer(project.completed_percent)}%" 
+
+        %td= link_to 'Tasks', project_tasks_path(project)
+        %td= link_to 'Show', project
+        %td= link_to 'Edit', edit_project_path(project)
+        %td= link_to 'Destroy', project, data: { confirm: 'Are you sure?' , turbo_method: :delete}
+
+%br
+
+= link_to 'New Project', new_project_path, class: 'btn btn-dark'

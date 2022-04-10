@@ -1,0 +1,29 @@
+%h1 Listing tasks
+
+%table.table
+  %thead
+    %tr
+      %th.col Title
+      %th.col Date start
+      %th.col Date end
+      %th Late
+      %th.col State
+      %th
+      %th
+      %th
+
+  %tbody
+    - @tasks.each do |task|
+      %tr
+        %td.align-middle= task.title
+        %td.align-middle= task.human_date_start
+        %td.align-middle= task.human_date_end
+        %td{:class => task.is_task_late }
+        %td.align-middle= link_to task.human_state, project_task_change_status_path(@project, task), data: { turbo_method: :put }
+        %td.align-middle= link_to 'Show', project_task_path(@project, task), class: 'btn btn-info'
+        %td.align-middle= link_to 'Edit', edit_project_task_path(@project, task), class: 'btn btn-warning'
+        %td.align-middle= link_to 'Destroy', project_task_path(@project, task), data: { turbo_confirm: 'Are you sure?', turbo_method: :delete }, class: 'btn btn-danger'
+
+%br
+
+= link_to 'New Task', new_project_task_path(@project), class: 'btn btn-dark'

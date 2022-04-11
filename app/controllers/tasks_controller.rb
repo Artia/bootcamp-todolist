@@ -30,7 +30,7 @@ class TasksController < ApplicationController
         format.json { render :show, status: :created, location: @task }
 
         update_percent_project = ProjectService.new
-        update_percent_project.update_percent_complete(project_id: @task.project_id)
+        update_percent_project.update_percent_complete(project_id: @project.id)
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @task.errors, status: :unprocessable_entity }
@@ -46,7 +46,7 @@ class TasksController < ApplicationController
         format.json { render :show, status: :ok, location: @task }
 
         update_percent_project = ProjectService.new
-        update_percent_project.update_percent_complete(project_id: @task.project_id)
+        update_percent_project.update_percent_complete(project_id: @project.id)
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @task.errors, status: :unprocessable_entity }
@@ -63,7 +63,7 @@ class TasksController < ApplicationController
       format.json { head :no_content }
 
       update_percent_project = ProjectService.new
-      update_percent_project.update_percent_complete(project_id: @task.project_id)
+      update_percent_project.update_percent_complete(project_id: @project.id)
     end
   end
 
@@ -76,7 +76,7 @@ class TasksController < ApplicationController
         format.json { head :no_content }
 
         update_percent_project = ProjectService.new
-        update_percent_project.update_percent_complete(project_id: @task.project_id)
+        update_percent_project.update_percent_complete(project_id: @project.id)
       end
       
     rescue TaskNotFoundException => e

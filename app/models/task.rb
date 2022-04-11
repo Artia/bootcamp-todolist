@@ -8,7 +8,11 @@ class Task < ApplicationRecord
 
   def human_state
     self.state ? 'Concluded' : 'Pending'
-  end  
+  end 
+  
+  def TaskDeadLine
+    self.date_end < Date.today && self.state == false ? 'Atrasado' : 'No Prazo'
+  end
 
   private
 

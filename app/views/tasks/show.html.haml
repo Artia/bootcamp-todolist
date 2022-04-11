@@ -5,14 +5,14 @@
   = @task.title
 %p
   %b Date start:
-  = @task.date_start
+  = @task.date_start.strftime("%d/%m/%Y")
 %p
   %b Date end:
-  = @task.date_end
+  = @task.date_end.strftime("%d/%m/%Y")
 %p
   %b State:
   = @task.state
 
-= link_to 'Edit', edit_project_task_path(@project, @task)
+= link_to 'Edit', edit_project_task_path(@project, @task), class: 'btn btn-dark'
 \|
-= link_to 'Back', project_tasks_path(@project)
+= link_to 'Back', project_tasks_path(@project), class: 'btn btn-dark'

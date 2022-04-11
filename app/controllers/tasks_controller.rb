@@ -23,12 +23,11 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
-    @task.project_id = @project.id
+    task = task_service.create(task_params, project_id: @project.id)
 
     respond_to do |format|
-      if @task.save
-        format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully created." }
+      if task.save
+        format.html { redirect_to project_tasks_url(@project), notice: "Task was successfully created." }
         format.json { render :show, status: :created, location: @task }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,9 +38,11 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
+    task = task_service.update(task: @task, params: task_params)
+
     respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully updated." }
+      if task.save
+        format.html { redirect_to project_tasks_url(@project), notice: "Task was successfully updated." }
         format.json { render :show, status: :ok, location: @task }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,10 +53,10 @@ class TasksController < ApplicationController
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
-    @task.destroy
+    task_service.destroy(task: @task, project_id: @project.id)
 
     respond_to do |format|
-      format.html { redirect_to project_tasks_url(@project), notice: "Task was successfully destroyed." }
+      format.html { redirect_to project_tasks_url(@task), notice: "Task was successfully destroyed." }
       format.json { head :no_content }
     end
   end

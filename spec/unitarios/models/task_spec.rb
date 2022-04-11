@@ -42,7 +42,7 @@ RSpec.describe Task, type: :model do
             end
 
             it 'state false' do
-                task.stub(state: true)
+                task.stub(state: false)
                 expect(task.human_state).to eq('Pending')  
             end
 

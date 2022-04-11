@@ -11,21 +11,21 @@ RSpec.describe 'TaskService', type: :service do
   end
 
   describe '#change_status' do
-    context '' do
-      it 'deve concluir a tarefa quando o state for nil' do
+    context 'Sucesso' do
+      it 'Deve concluir a tarefa quando o state for nil' do
         @task_service.change_status(task_id: @task.id)
         expect(@task.reload.state).to eq(true)
       end
   
-      it 'deve concluir a tarefa quando o state for false' do
+      it 'Deve concluir a tarefa quando o state for false' do
         @task.update(state: false)
         @task_service.change_status(task_id: @task.id)
         expect(@task.reload.state).to be_truthy
       end
     end
     
-    context '' do
-      it 'deve transformar a tarefa quando o state for true' do
+    context 'Desmarcar tarefa' do
+      it 'Deve transformar a tarefa quando o state for true' do
         @task.update(state: true)
         @task_service.change_status(task_id: @task.id)
         expect(@task.reload.state).to be_falsy

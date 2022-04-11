@@ -1,11 +1,23 @@
 class TaskService < ApplicationService
-    # def create_task(task_id:)
+    def create_task(task)
+        task.save
+        project_service.update_percent_complete(project_id: task.project_id)
+    end
 
-    # end
+    def destroy_task(task_id:)        
+        task = find_task(task_id: task_id)
+        raise TaskNotFoundException if task.blank?
+        task.destroy
+        project_service.update_percent_complete(project_id: task.project_id)
+    end
 
-    # def destroy_task(task_id:)
-
-    # end
+    def edit_task(task_id:, task_params:)        
+        task = find_task(task_id: task_id)
+        raise TaskNotFoundException if task.blank?
+        task = task_update(task, task_params)
+        task.save
+        project_service.update_percent_complete(project_id: task.project_id)
+    end
     
     def change_status(task_id:)
         task = find_task(task_id: task_id)

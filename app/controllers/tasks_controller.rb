@@ -21,13 +21,17 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
-    @task.project_id = @project.id
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
-      else
+    begin
+      @task = Task.new(task_params)
+      @task.project_id = @project.id
+      task_service.create_task(@task)
+      respond_to do |format|
+          task_service.create_task(@task)
+          format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully created." }
+          format.json { render :show, status: :created, location: @task }
+      end
+    rescue
+      respond_to do |format|
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
@@ -36,11 +40,14 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
-    respond_to do |format|
-      if @task.update(task_params)
+    begin
+      task_service.edit_task(task_id: @task.id, task_params:)
+      respond_to do |format|
         format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully updated." }
         format.json { render :show, status: :ok, location: @task }
-      else
+      end
+    rescue TaskNotFoundException => e
+      respond_to do |format|
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
@@ -49,11 +56,17 @@ class TasksController < ApplicationController
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
-    @task.destroy
-
-    respond_to do |format|
-      format.html { redirect_to project_tasks_url(@project, @task), notice: "Task was successfully destroyed." }
-      format.json { head :no_content }
+    begin
+      task_service.destroy_task(task_id: @task.id)
+      respond_to do |format|
+        format.html { redirect_to project_tasks_url(@project, @task), notice: "Task was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    rescue TaskNotFoundException => e
+      respond_to do |format|
+        format.html {redirect_to project_tasks_url(@project), notice: e.message}
+        format.json { {notice: e.message} }
+      end
     end
   end
 

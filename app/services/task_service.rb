@@ -1,17 +1,16 @@
 class TaskService < ApplicationService
-    def create(params, project_id:)
+
+    def create(params:, project_id:)
         task = Task.new(params)
         task.project_id = project_id
         
-        task.save
-        project_service.update_percent_complete(project_id)
         task
     end
 
     def update(task:, params:)
+        task = find_task(task_id: task.id)
         task.update(params)
-        task.save
-        project_service.update_percent_complete(task.project_id)
+
         task
     end
 
@@ -23,7 +22,9 @@ class TaskService < ApplicationService
     
     def change_status(task_id:)
         task = find_task(task_id: task_id)
+
         raise TaskNotFoundException if task.blank?
+
         task_update(task, state: !task.state)
         task.save
         project_service.update_percent_complete(task.project_id)

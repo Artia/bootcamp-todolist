@@ -18,10 +18,10 @@
         -else
           %td= "#{Integer(project.completed_percent)}%" 
 
-        %td= link_to 'Tasks', project_tasks_path(project)
-        %td= link_to 'Show', project
-        %td= link_to 'Edit', edit_project_path(project)
-        %td= link_to 'Destroy', project, data: { confirm: 'Are you sure?' , turbo_method: :delete}
+        %td= link_to 'Tasks', project_tasks_path(project), class: 'btn btn-warning'
+        %td= link_to 'Show', project, class: 'btn btn-success'
+        %td= link_to 'Edit', edit_project_path(project), class: 'btn btn-success'
+        %td= link_to 'Destroy', project, data: { confirm: 'Are you sure?' , turbo_method: :delete}, class: 'btn btn-danger'
 
 %br
 

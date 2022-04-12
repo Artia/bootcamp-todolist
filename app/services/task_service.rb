@@ -17,7 +17,7 @@ class TaskService < ApplicationService
       task.assign_attributes(args)
       task
     end
-
+    
     def project_service
       @project_service ||= ProjectService.new
     end

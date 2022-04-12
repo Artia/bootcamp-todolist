@@ -5,7 +5,7 @@
   = @project.title
 %p
   %b Completed percent:
-  = @project.completed_percent
+  = @project.formated_percentage
 
 = link_to 'Edit', edit_project_path(@project), class: 'btn btn-info'
 \|

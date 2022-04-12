@@ -5,13 +5,13 @@
   = @task.title
 %p
   %b Date start:
-  = @task.date_start
+  = @task.formated_start_date
 %p
   %b Date end:
-  = @task.date_end
+  = @task.formated_end_date
 %p
   %b State:
-  = @task.state
+  = @task.human_state
 
 = link_to 'Edit', edit_project_task_path(@project, @task), class: 'btn btn-info'
 \|

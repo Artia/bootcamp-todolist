@@ -2,7 +2,7 @@ class TaskService < ApplicationService
     def create_task(task)
         is_saved = task.save
         project_service.update_percent_complete(project_id: task.project_id)
-        is_saved ? true : false 
+        is_saved
     end
 
     def destroy_task(task_id:)        

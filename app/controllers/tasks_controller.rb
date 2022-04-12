@@ -41,16 +41,16 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
-    begin
-      task_service.edit_task(task_id: @task.id, task_params:)
+    @task = task_service.edit_task(task_id: @task.id, task_params:)
+    if @task.save
       respond_to do |format|
         format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully updated." }
         format.json { render :show, status: :ok, location: @task }
       end
-    rescue TaskNotFoundException => e
+    else
       respond_to do |format|
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        format.json { render json: task.errors, status: :unprocessable_entity }
       end
     end
   end

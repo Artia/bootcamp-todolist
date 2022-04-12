@@ -1,12 +1,14 @@
 class ProjectService < ApplicationService
 
-    def project_create(project) 
-        project.save
+    def project_create(project_params)
+        project = Project.new(project_params)
+        project
     end
 
     def project_update(project_params, project_id:)
         project = find_project(project_id: project_id)
         project.update(project_params)
+        project
     end
 
     def project_destroy(project)

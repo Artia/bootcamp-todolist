@@ -21,10 +21,9 @@ class ProjectsController < ApplicationController
 
   # POST /projects or /projects.json
   def create
-    @project = Project.new(project_params)
-    is_created = project_service.project_create(@project)
+    @project = project_service.project_create(project_params)
     respond_to do |format|
-      if is_created
+      if @project.save
         format.html { redirect_to project_url(@project), notice: "Project was successfully created." }
         format.json { render :show, status: :created, location: @project }
       else
@@ -36,9 +35,9 @@ class ProjectsController < ApplicationController
 
   # PATCH/PUT /projects/1 or /projects/1.json
   def update
-    is_updated = project_service.project_update(project_params, project_id: @project.id)
+    @project = project_service.project_update(project_params, project_id: @project.id)
     respond_to do |format|
-      if is_updated
+      if @project.save
         format.html { redirect_to project_url(@project), notice: "Project was successfully updated." }
         format.json { render :show, status: :ok, location: @project }
       else

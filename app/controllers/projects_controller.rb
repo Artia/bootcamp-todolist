@@ -22,9 +22,9 @@ class ProjectsController < ApplicationController
   # POST /projects or /projects.json
   def create
     @project = Project.new(project_params)
-
+    is_created = project_service.project_create(@project)
     respond_to do |format|
-      if @project.save
+      if is_created
         format.html { redirect_to project_url(@project), notice: "Project was successfully created." }
         format.json { render :show, status: :created, location: @project }
       else
@@ -36,8 +36,9 @@ class ProjectsController < ApplicationController
 
   # PATCH/PUT /projects/1 or /projects/1.json
   def update
+    is_updated = project_service.project_update(project_params, project_id: @project.id)
     respond_to do |format|
-      if @project.update(project_params)
+      if is_updated
         format.html { redirect_to project_url(@project), notice: "Project was successfully updated." }
         format.json { render :show, status: :ok, location: @project }
       else
@@ -49,8 +50,7 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/1 or /projects/1.json
   def destroy
-    @project.destroy
-
+    project_service.project_destroy(@project)
     respond_to do |format|
       format.html { redirect_to projects_url, notice: "Project was successfully destroyed." }
       format.json { head :no_content }
@@ -66,5 +66,9 @@ class ProjectsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def project_params
       params.require(:project).permit(:title)
+    end
+
+    def project_service
+      @project_service ||= ProjectService.new
     end
 end

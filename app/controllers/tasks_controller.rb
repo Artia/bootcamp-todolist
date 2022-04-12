@@ -21,16 +21,17 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    begin
-      @task = Task.new(task_params)
-      @task.project_id = @project.id
-      task_service.create_task(@task)
+    puts task_params
+    @task = Task.new(task_params)
+    @task.project_id = @project.id
+    is_saved = task_service.create_task(@task)
+    if is_saved
       respond_to do |format|
           task_service.create_task(@task)
           format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully created." }
           format.json { render :show, status: :created, location: @task }
       end
-    rescue
+    else
       respond_to do |format|
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @task.errors, status: :unprocessable_entity }
@@ -93,7 +94,7 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :date_start, :date_end, :state)
+      params.require(:task).permit(:title, :date_start, :date_end, :state, :time_zone)
     end
 
     def set_project

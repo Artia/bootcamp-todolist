@@ -1,5 +1,25 @@
 class ProjectService < ApplicationService
 
+    def project_create(project) 
+        project.save ? true : false
+    end
+
+    def project_update(project_params, project_id:)
+        project = find_project(project_id: project_id)
+        if project.update(project_params)
+            return true
+        end
+        false
+    end
+
+    def project_destroy(project)
+        has_tasks = Task.select("COUNT(*)").where(project_id: project.id).first
+        if (has_tasks)
+            Task.where(project_id: project.id).destroy_all
+        end
+        project.destroy
+    end
+
     def update_percent_complete(project_id:)
         find_project(project_id: project_id).update(completed_percent: complete_percentage(project_id: project_id))
     end

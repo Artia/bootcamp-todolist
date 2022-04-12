@@ -18,7 +18,7 @@
         %td= link_to 'Tasks', project_tasks_path(project)
         %td= link_to 'Show', project
         %td= link_to 'Edit', edit_project_path(project)
-        %td= link_to 'Destroy', project, data: { turbo_confirm: 'Are you sure?', turbo_method: :delete }
+        %td= link_to 'Destroy', project, data: { turbo_confirm: 'This project and all of its tasks will be permanently deleted, are you sure?', turbo_method: :delete }
 
 %br
 

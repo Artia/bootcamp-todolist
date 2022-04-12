@@ -22,7 +22,7 @@ class Task < ApplicationRecord
     if self.state == true
       return 'bg-success bg-gradient'
     end
-    if self.date_end < Time.now.utc 
+    if self.date_end < Time.now - 3.hours
       return 'bg-danger bg-gradient'
     end
     'bg-warning bg-gradient'

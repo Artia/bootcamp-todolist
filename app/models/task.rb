@@ -10,6 +10,24 @@ class Task < ApplicationRecord
     self.state ? 'Concluded' : 'Pending'
   end
 
+  def formated_start_date
+    "#{self.date_start.strftime("%d/%m/%Y %H:%M")}"
+  end
+
+  def formated_end_date
+    "#{self.date_end.strftime("%d/%m/%Y %H:%M")}"
+  end
+
+  def deadline_status
+    if self.formated_end_date < Time.now - 108000 && self.human_state == 'Pending'
+      return "Tarefa atrasada"
+    elsif self.human_state == 'Concluded'
+      return "Tarefa finalizada"
+    else
+      return "Tarefa em dia"
+    end
+  end
+
   private
 
   def validate_dates

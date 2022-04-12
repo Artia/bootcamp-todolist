@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
   before_action :set_project
+  after_action :update_percent_complete, only: [:create, :update, :destroy, :change_status]
   # GET /tasks or /tasks.json
   def index
     @tasks = Task.where(project_id: @project.id)
@@ -103,5 +104,13 @@ class TasksController < ApplicationController
 
     def task_service
       @task_service ||= TaskService.new
+    end
+    
+    def project_service
+      @project_service ||= ProjectService.new 
+    end
+
+    def update_percent_complete
+      project_service.update_percent_complete(project_id: @project.id)
     end
 end

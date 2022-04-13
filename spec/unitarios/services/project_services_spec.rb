@@ -22,3 +22,4 @@ RSpec.describe ProjectService, type: :service do
       expect(@project_service.completed_percent(project_id: @project_id)).to eq(100)
     end
   end
+end

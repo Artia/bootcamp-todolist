@@ -2,6 +2,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
   before_action :set_project
   # GET /tasks or /tasks.json
+
+
   def index
     @tasks = Task.where(project_id: @project.id)
   end
@@ -21,7 +23,7 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = task_service.create_task(task_params)
     @task.project_id = @project.id
     
     respond_to do |format|
@@ -42,6 +44,9 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params)
+        # @task_service ||= TaskService.new
+        # if @task_service.edit_task(@task)
+
         format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully updated." }
         format.json { render :show, status: :ok, location: @task }
 

@@ -5,6 +5,12 @@ RSpec.describe TasksController, type: :controller do
   let(:task) { Task.create(title: 'Teste Automatizado', date_start: Time.now, date_end: Time.now + 2.day, project_id: project.id) }
 
   describe 'GET#index' do
+
+    describe 'GET#index' do
+      before do
+        get :index, params: { project_id: project.id }
+      end
+
       it 'retorna status 200' do
         get :index, params: { project_id: project.id }
         expect(response.status).to eq(200)
@@ -16,15 +22,19 @@ RSpec.describe TasksController, type: :controller do
   end
 
   describe 'GET#new' do
-    it 'retorna status 200' do
-      get :index, params: { project_id: project.id }
+    before do
+      get :new, params: { project_id: project.id }
+    end
+
+    it 'deve retornar status 200' do
       expect(response.status).to eq(200)
-    end    
-    it 'deve renderizar o template do index' do
-      get :index, params: { project_id: project.id }
-      expect(response).to render_template(:index)
+    end
+
+    it 'deve renderizar o template index' do
+      expect(response).to render_template(:new)
     end
   end
+
 
   describe 'POST#create' do
     
@@ -73,7 +83,7 @@ RSpec.describe TasksController, type: :controller do
     it 'retorna status 200' do
       get :show, params: { project_id: project.id, id: task.id }
       expect(response.status).to eq(200)
-    end    
+    end
     it 'deve renderizar o template do show' do
       get :show, params: { project_id: project.id, id: task.id}
       expect(response).to render_template(:show)

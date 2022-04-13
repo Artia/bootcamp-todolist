@@ -3,10 +3,6 @@ require 'rails_helper'
 RSpec.describe Task, type: :model do
   let(:task) { Task.new(title: 'Nova Tarefa') }
 
-  # before :all do
-  #   @task = 
-  # end
-
   describe 'associação' do
     it { is_expected.to belong_to(:project) }
   end

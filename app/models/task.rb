@@ -6,12 +6,13 @@ class Task < ApplicationRecord
   validates :date_end, presence: true
   validate :validate_dates
 
-  def endline_time(date_end)
-    if (date_end < DateTime.now)
-      "Atrasado"
-    else
-      "No Prazo"
-    end
+  def endline_time
+    self.date_end < DateTime.now && self.state == false ? "Atrasado" : "No Prazo"
+    # if (date_end < DateTime.now)
+    #   "Atrasado"
+    # else
+    #   "No Prazo"
+    # end
   end
 
   def human_state 

@@ -48,8 +48,8 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/1 or /projects/1.json
   def destroy
-    @project.destroy
-
+    # @project.destroy
+    project_service.project_destroy(@project)
     respond_to do |format|
       format.html { redirect_to projects_url, notice: "Project was successfully destroyed." }
       format.json { head :no_content }
@@ -60,6 +60,10 @@ class ProjectsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
+    end
+
+    def project_service
+      @project_service ||= ProjectService.new
     end
 
     # Only allow a list of trusted parameters through.

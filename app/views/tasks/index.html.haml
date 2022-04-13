@@ -33,7 +33,7 @@
         %td|
         %td= link_to task.human_state, project_task_change_status_path(@project, task), data: { turbo_method: :put }
         %td|
-        %td= task.endline_time(task.date_end)
+        %td= task.endline_time
         %td|
         %td= link_to 'Show', project_task_path(@project, task), class: 'btn btn-success'
         %td= link_to 'Edit', edit_project_task_path(@project, task), class: 'btn btn-success'

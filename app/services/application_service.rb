@@ -13,5 +13,4 @@ class ApplicationService
     return 0 if info_tasks.total_tasks.to_f.zero?
     (info_tasks.task_concluded.to_f / info_tasks.total_tasks.to_f) * 100
   end
-
 end

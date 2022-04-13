@@ -8,9 +8,35 @@ class ProjectService < ApplicationService
         (info_tasks.task_concluded.to_f / info_tasks.total_tasks.to_f) * 100
     end
 
+    def project_destroy(project)
+        has_tasks = Task.select("COUNT(*)").where(project_id: project.id).first
+        if (has_tasks)
+            Task.where(project_id: project.id).destroy_all
+        end
+        project.destroy
+    end
+
+    def create(project_params:)
+        project = Project.new(project_params)
+        project
+    end
+
+    def update
+        project = find_project(project_id: params[:id])
+        project.update(params)
+        project
+    end
+
+    def destroy(project_id:)
+        project = find_project(project_id: project_id)
+        project.destroy
+    end
+
+
     private
 
     def find_project(project_id:)
         Project.find_by(id: project_id)
     end
+
 end

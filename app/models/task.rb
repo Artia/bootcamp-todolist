@@ -7,7 +7,8 @@ class Task < ApplicationRecord
   validate :validate_dates
 
   def human_state
-    self.state ? 'Concluded' : 'Pending'
+    byebug
+    self.state ? 'Concluido' : 'Pendente'
   end 
   
   def TaskDeadLine

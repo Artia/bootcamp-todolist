@@ -1,0 +1,31 @@
+%h1 Listing tasks
+
+%table.table
+  %thead
+    %tr
+      %th Title
+      %th Date start
+      %th Date end
+      %th Prazo
+      %th State
+      %th
+      %th
+      %th
+
+  %tbody
+    - @tasks.each do |task|
+      %tr
+        %td= task.title
+        %td= task.date_start.strftime("%d/%m/%Y at %I:%M%p")
+        %td= task.date_end.strftime("%d/%m/%Y at %I:%M%p")
+        %td= link_to task.taskDeadline, project_task_path(@project, task)
+        %td= link_to task.human_state, project_task_change_status_path(@project, task), data: {turbo_method: :put}
+        %td= link_to 'Show', project_task_path(@project, task)
+        %td= link_to 'Edit', edit_project_task_path(@project, task)
+        %td= link_to 'Destroy', project_task_path(@project, task), data: { turbo_confirm: 'Are you sure?', turbo_method: :delete }, class: 'btn btn-danger'
+
+%br
+
+= link_to 'New Task', new_project_task_path(@project), class: 'btn btn-dark'
+
+%enviroment.rb 

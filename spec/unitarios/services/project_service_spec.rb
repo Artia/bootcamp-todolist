@@ -26,9 +26,6 @@ RSpec.describe ProjectService, type: :service do
             expect(@project_service.complete_percentage(project_id: @project_id)).to eq(100)
         end
 
-        # DESAFIOS
-        # OUTRAS CONDIÇÕES DE CÁLCULO
-
         it 'Deve resultar em 50% completo' do
             allow(Task).to receive_message_chain(:select, :where, :first) { double('Task', total_tasks: 2, task_concluded: 1) }
             expect(@project_service.complete_percentage(project_id: @project_id)).to eq(50)

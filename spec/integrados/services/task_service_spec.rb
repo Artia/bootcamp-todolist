@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'TaskService', type: :service do
+RSpec.describe TaskService, type: :service do
+
   before do
     @task_service = TaskService.new
     
@@ -8,6 +9,30 @@ RSpec.describe 'TaskService', type: :service do
     @project.save
     
     @task = Task.create(title: 'Tarefa', date_start: Time.now, date_end: Time.now + 2.days, project_id: @project.id)
+  end
+
+  describe 'create' do
+    it 'Deve criar uma tarefa' do
+      @params = { title: "Nova tarefa", project_id: @project.id }
+
+      task = @task_service.create(params: @params, project_id: @project.id)
+      expect(task).to have_attributes(:title => 'Nova tarefa', :project_id => @project.id)
+    end
+  end
+
+  describe 'update' do
+    it 'Deve alterar uma tarefa' do
+      @task_service.update(task: @task, params: { title: 'Tarefa atualizada' })
+      expect(@task.reload.title).to eq('Tarefa atualizada')
+    end
+  end
+
+  describe 'destroy' do
+    it 'Deve deletar uma tarefa' do
+      @task_service.destroy(task: @task, project_id: @project.id)
+
+      expect(Task.all.count) == 0
+    end
   end
 
   describe '#change_status' do

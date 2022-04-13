@@ -19,7 +19,8 @@ class Task < ApplicationRecord
   end
 
   def deadline_status
-    if self.formated_end_date < Time.now - 108000 && self.human_state == 'Pending'
+    date_now = Time.now - 10800
+    if self.formated_end_date < date_now && self.human_state == 'Pending'
       return "Tarefa atrasada"
     elsif self.human_state == 'Concluded'
       return "Tarefa finalizada"

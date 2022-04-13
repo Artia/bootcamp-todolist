@@ -7,48 +7,47 @@ RSpec.describe Task, type: :model do
     #    @task = Task.new(title: 'Nova tarefa')
     #end
 
-    describe 'validação' do
+    describe 'Validação' do
         
-        describe 'title' do
+        describe 'Title' do
             it { is_expected.to validate_presence_of(:title) }
             it { is_expected.to validate_length_of(:title).is_at_most(255) }    
         end
         
-        describe 'dates' do
+        describe 'Dates' do
             it { is_expected.to validate_presence_of(:date_start) }
             it { is_expected.to validate_presence_of(:date_end) }
         
-            it 'não deve aceitar data de início maior que data de fim' do
+            it 'Não deve aceitar data de início maior que data de fim' do
                 #Setup
-            task.date_start = Time.now
-            task.date_end = Time.now - 1.day
+                task.date_start = Time.now
+                task.date_end = Time.now - 1.day
 
-            task.valid?
+                task.valid?
 
-            expect(task.errors.added?(:date_start, 'cannot be greater than the end date')).to eq(true)
+                expect(task.errors.added?(:date_start, 'cannot be greater than the end date')).to eq(true)
             end
         end
 
-        describe 'associação' do
+        describe 'Associação' do
             it { is_expected.to belong_to(:project) }
         end
 
-        describe 'validação' do
-        end
-
-        describe 'human_state' do
-            it 'state nil' do
-                expect(task.human_state).to eq('Pending')
-            end
-
-            it 'state false' do
-                task.stub(state: false)
-                expect(task.human_state).to eq('Pending')  
-            end
-
-            it 'state true' do
-                task.stub(state: true)
-                expect(task.human_state).to eq('Concluded')
+        describe 'Validação' do
+            context 'human_state' do
+                it 'State nil' do
+                    expect(task.human_state).to eq('Pending')
+                end
+    
+                it 'State false' do
+                    task.stub(state: false)
+                    expect(task.human_state).to eq('Pending')  
+                end
+    
+                it 'State true' do
+                    task.stub(state: true)
+                    expect(task.human_state).to eq('Concluded')
+                end
             end
         end
     end

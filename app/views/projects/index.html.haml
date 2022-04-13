@@ -1,0 +1,24 @@
+%h1 All projects
+
+%table.table
+  %thead
+    %tr
+      %th Title
+      %th Completed percent
+      %th Tasks
+      %th Show project
+      %th Edit project
+      %th Delete project
+
+  %tbody
+    - @projects.each do |project|
+      %tr
+        %td= project.title
+        %td= number_to_percentage(project.completed_percent, precision: 2)
+        %td= link_to 'Tasks', project_tasks_path(project), class: 'btn btn-dark'
+        %td= link_to 'Show', project, class: 'btn btn-dark'
+        %td= link_to 'Edit', edit_project_path(project), class: 'btn btn-dark'
+        %td= link_to 'Destroy', project, data: { turbo_confirm: 'Are you sure?', turbo_method: :delete}, class: 'btn btn-danger'
+%br
+
+= link_to 'New Project', new_project_path, class: 'btn btn-dark'

@@ -49,6 +49,45 @@ RSpec.describe Task, type: :model do
                     expect(task.human_state).to eq('Concluded')
                 end
             end
+
+            context 'deadline_status' do
+                it 'Deve retornar Tarefa atrasada' do
+                    task.stub(date_end: Time.now - 1.day)
+                    task.stub(state: false)
+
+                    expect(task.deadline_status).to eq("Tarefa atrasada")
+                end
+
+                it 'Deve retornar Tarefa finalizada' do
+                    task.stub(date_end: Time.now - 1.day)
+                    task.stub(state: true)
+
+                    expect(task.deadline_status).to eq("Tarefa finalizada")
+                end
+
+                it 'Deve retornar Tarefa em dia' do
+                    task.stub(date_end: Time.now + 1.day)
+                    task.stub(state: false)
+
+                    expect(task.deadline_status).to eq("Tarefa em dia")
+                end
+            end
+
+            context 'formated_start_date' do
+                it 'Deve retornar data inicial formatada' do
+                    task.stub(date_start: Time.now)
+
+                    expect(task.formated_start_date).to start_with('13/04/2022')
+                end
+            end
+
+            context 'formated_end_date' do
+                it 'Deve retornar data final formatada' do
+                    task.stub(date_end: Time.now)
+                    
+                    expect(task.formated_end_date).to start_with('13/04/2022')
+                end
+            end
         end
     end
 end

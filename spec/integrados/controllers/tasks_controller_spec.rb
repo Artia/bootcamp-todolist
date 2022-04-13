@@ -134,4 +134,66 @@ RSpec.describe TasksController, type: :controller do
             end
         end
     end
+
+    describe 'PATCH#change_status' do
+        context 'Sucesso' do
+            context 'Quando o state for nil' do
+                before do
+                    @params = { task_id: task.id, project_id: project.id }
+                    put :change_status, params: @params
+                end
+        
+                it 'Deve alterar o status da tarefa para true' do
+                    expect(task.reload.state).to eq(true)
+                end
+
+                it 'Deve retornar status 200' do
+                    expect(response.request.flash[:notice]).to eq("Task was successfull updated.")
+                end
+            end
+
+            context 'Quando o state for false' do
+                before do
+                    @params = { task_id: task.id, project_id: project.id }
+                    task.update(state: false)
+                    put :change_status, params: @params
+                end
+                
+                it 'Deve alterar o status da tarefa para true' do
+                    expect(task.reload.state).to be_truthy
+                end
+
+                it 'Deve retornar status 200' do
+                    expect(response.request.flash[:notice]).to eq("Task was successfull updated.")
+                end
+            end
+
+            context 'Quando o state for true' do
+                before do
+                    @params = { task_id: task.id, project_id: project.id }
+                    task.update(state: true)
+                    put :change_status, params: @params
+                end
+
+                it 'Deve alterar o status da tarefa para false' do
+                    expect(task.reload.state).to be_falsy
+                end
+
+                it 'Deve retornar o status 200' do
+                    expect(response.request.flash[:notice]).to eq("Task was successfull updated.")
+                end
+            end
+        end
+
+        context 'Erro' do
+            before do
+                @params = { task_id: 999999, project_id: project.id }
+                put :change_status, params: @params
+            end
+
+            it 'Deve retornar status 422' do
+                expect(response.request.flash[:notice]).to eq("Task not found")
+            end
+        end
+    end
 end

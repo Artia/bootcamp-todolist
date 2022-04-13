@@ -7,12 +7,11 @@ RSpec.describe Project, type: :model do
   end
 
   describe 'fromated_percentage' do
-    before do
-      @project = Project.new
-    end
+    it 'Deve formatar o número com %' do
+      project = Project.create(title: 'Projeto teste')
+      project.stub(completed_percent: 50)
 
-    it 'Deve formatar o número' do
-      
+      expect(project.formated_percentage).to eq('50.0%')
     end
   end
 end

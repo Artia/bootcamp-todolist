@@ -56,7 +56,6 @@ class TasksController < ApplicationController
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
     begin
-      
       task_service.destroy_task(task_id: params[:id].to_i)
       respond_to do |format|
         format.html { redirect_to project_tasks_url(@project, @task), notice: "Task was successfully destroyed." }

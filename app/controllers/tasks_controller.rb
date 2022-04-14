@@ -38,6 +38,9 @@ class TasksController < ApplicationController
     end
   end
 
+
+  # Variavel que acessa os params gerados pelo task_params e busca o ID
+  # Passando para estes parametros para a lógica no controler
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     task = task_service.update(task_id: params[:id].to_i, params: task_params)
@@ -55,6 +58,8 @@ class TasksController < ApplicationController
       end
     end
   end
+
+  # Linha que apenas faz chamada destroy para a variável global instanciada "task"
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy

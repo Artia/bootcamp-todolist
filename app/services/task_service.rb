@@ -7,28 +7,29 @@ class TaskService < ApplicationService
     project_service.update_percent_complete(project_id: task.project_id)
   end
 
+  # Função que busca a task usando como parametro o id da task.
   def find_task(task_id:)
     Task.find_by(id: task_id)
   end
 
-  def task_update(task, args = {})
-    task.assign_attributes(args)
-    task
-  end
 
+  # Função que faz a geração da task recebendo como parametro o id do projeto da task
+  # e os parametros da task.
   def create(params:, project_id:)
     task = Task.new(params)
     task.project_id = project_id
     task
   end
 
+  # Função que efetua a alteração na task, usando a função "find_task" que busca o id da task
+  # Passa os novos parametros para a task e retorna a task.
   def update(params:, task_id:)
     task = find_task(task_id: task_id)
-    raise TaskNotFoundException if task.blank?
     task.update(params)
     task    
   end
 
+  # Função que busca a task usando como parametro o id e efetua o destroy da mesma.
   def destroy
     task = Task.find(params[:id])
     task.destroy

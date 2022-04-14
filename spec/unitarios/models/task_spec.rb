@@ -2,9 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
     let(:task) { Task.new(title: 'Nova Tarefa') }
-    # before :all do
-    #     @task = Task.new(title: 'Nova Tarefa')
-    # end
 
     describe 'associação' do
         it { is_expected.to belong_to(:project) } 
@@ -47,5 +44,51 @@ RSpec.describe Task, type: :model do
             end
         end
 
+        describe 'datas user friendly' do
+            it 'date start' do
+                task.stub(date_start: '2022-04-09 11:13:00')
+                expect(task.human_date_start).to eq('09/04/2022 at 11:13')
+            end
+            it 'date end' do
+                task.stub(date_end: '2022-12-19 13:15:00')
+                expect(task.human_date_end).to eq('19/12/2022 at 13:15')
+            end
+        end
+
+        describe 'verifica se a tarefa esta atrasada' do
+            context 'esta no prazo' do
+                before do
+                    task.stub(date_start: Time.now - 1.day)
+                    task.stub(date_end: Time.now + 1.day)
+                end
+                it 'concluida' do
+                    task.stub(state: true)
+                    expect(task.is_task_late).to eq(false)
+                end
+
+                it 'pendente' do
+                    task.stub(state: false)
+                    expect(task.is_task_late).to eq(false)
+                end
+            end
+
+            context 'esta fora do prazo' do
+                before do
+                    task.stub(date_start: Time.now - 2.day)
+                    task.stub(date_end: Time.now - 1.day)
+                end
+
+                it 'concluida' do
+                    task.stub(state: true)
+                    expect(task.is_task_late).to eq(false)
+                end
+
+                it 'pendente' do
+                    task.stub(state: false)
+                    expect(task.is_task_late).to eq(true)
+                end
+            end
+
+        end
     end
 end

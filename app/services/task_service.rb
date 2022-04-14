@@ -10,13 +10,12 @@ class TaskService < ApplicationService
         task.destroy
     end
 
-    def edit_task(task_id:, task_params:)        
+    def edit_task(task_id:, task_params:)
         task = find_task(task_id: task_id)
         raise TaskNotFoundException if task.blank?
         task = task_update(task, task_params)
         task
     end
-    
     
     def change_status(task_id:)
         task = find_task(task_id: task_id)
@@ -34,9 +33,5 @@ class TaskService < ApplicationService
     def task_update(task, args = {})
         task.assign_attributes(args)
         task
-    end
-
-    def project_service
-        @project_service ||= ProjectService.new
     end
 end

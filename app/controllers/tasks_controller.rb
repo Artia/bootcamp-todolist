@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[ show edit update ]
   before_action :set_project
   after_action :update_percent_complete, only: [:create, :update, :destroy, :change_status]
   # GET /tasks or /tasks.json
@@ -22,7 +22,6 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    puts task_params
     @task = Task.new(task_params)
     @task.project_id = @project.id
     is_saved = task_service.create_task(@task)
@@ -42,24 +41,23 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
-    @task = task_service.edit_task(task_id: @task.id, task_params:)
-    if @task.save
-      respond_to do |format|
-        format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @task }
+      @task = task_service.edit_task(task_id: @task.id, task_params:)
+      respond_to do |format| 
+        if @task.save
+          format.html {redirect_to project_tasks_url(@project), notice: 'Task was successfully updated.'}
+          format.json {head :no_content}
+        else 
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @task.errors, status: :unprocessable_entity }
+        end
       end
-    else
-      respond_to do |format|
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: task.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
     begin
-      task_service.destroy_task(task_id: @task.id)
+      
+      task_service.destroy_task(task_id: params[:id].to_i)
       respond_to do |format|
         format.html { redirect_to project_tasks_url(@project, @task), notice: "Task was successfully destroyed." }
         format.json { head :no_content }
@@ -76,7 +74,7 @@ class TasksController < ApplicationController
     begin
       task_service.change_status(task_id: params[:task_id].to_i)
       respond_to do |format| 
-        format.html {redirect_to project_tasks_url(@project), notice: 'Task was successfully updated'}
+        format.html {redirect_to project_tasks_url(@project), notice: 'Task was successfully updated.'}
         format.json {head :no_content}
       end
     rescue TaskNotFoundException => e

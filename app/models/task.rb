@@ -19,13 +19,10 @@ class Task < ApplicationRecord
   end
 
   def is_task_late
-    if self.state == true
-      return 'bg-success bg-gradient'
+    if self.date_end > Time.now - 3.hours || self.state == true
+      return false
     end
-    if self.date_end < Time.now - 3.hours
-      return 'bg-danger bg-gradient'
-    end
-    'bg-warning bg-gradient'
+    true
   end
 
   private
@@ -37,6 +34,6 @@ class Task < ApplicationRecord
   end
 
   def format_date(date)
-    date.strftime('%d/%m/%Y at %H:%M')
+    date.to_time.strftime('%d/%m/%Y at %H:%M')
   end
 end

@@ -15,7 +15,10 @@
   %tbody
     - @tasks.each do |task|
       %tr
-        %td{:class => task.is_task_late }
+        - if task.is_task_late
+          %td{:class => 'bg-danger bg-gradient' }
+        - else
+          %td{:class => 'bg-success bg-gradient' }
         %td.align-middle= task.title
         %td.align-middle= task.human_date_start
         %td.align-middle= task.human_date_end

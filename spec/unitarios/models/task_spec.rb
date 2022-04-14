@@ -75,17 +75,17 @@ RSpec.describe Task, type: :model do
 
             context 'formated_start_date' do
                 it 'Deve retornar data inicial formatada' do
-                    task.stub(date_start: Time.now)
+                    task.stub(date_start: Time.new(2022, 04, 14))
 
-                    expect(task.formated_start_date).to start_with('13/04/2022')
+                    expect(task.formated_start_date).to start_with('14/04/2022')
                 end
             end
 
             context 'formated_end_date' do
                 it 'Deve retornar data final formatada' do
-                    task.stub(date_end: Time.now)
+                    task.stub(date_end: Time.new(2022, 04, 14))
                     
-                    expect(task.formated_end_date).to start_with('13/04/2022')
+                    expect(task.formated_end_date).to start_with('14/04/2022')
                 end
             end
         end

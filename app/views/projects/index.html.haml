@@ -13,12 +13,12 @@
   %tbody
     - @projects.each do |project|
       %tr
-        %td= project.title
-        %td= project.format_percent
-        %td= link_to 'Tasks', project_tasks_path(project)
-        %td= link_to 'Show', project
-        %td= link_to 'Edit', edit_project_path(project)
-        %td= link_to 'Destroy', project, data: { turbo_confirm: 'This project and all of its tasks will be permanently deleted, are you sure?', turbo_method: :delete }
+        %td.align-middle= project.title
+        %td.align-middle= project.format_percent
+        %td.align-middle= link_to 'Tasks', project_tasks_path(project), class: 'btn btn-success'
+        %td.align-middle= link_to 'Show', project, class: 'btn btn-info'
+        %td.align-middle= link_to 'Edit', edit_project_path(project), class: 'btn btn-warning'
+        %td.align-middle= link_to 'Destroy', project, data: { turbo_confirm: 'This project and all of its tasks will be permanently deleted, are you sure?', turbo_method: :delete }, class: 'btn btn-danger'
 
 %br
 

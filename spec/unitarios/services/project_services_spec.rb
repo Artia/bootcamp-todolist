@@ -21,5 +21,5 @@ RSpec.describe ProjectService, type: :service do
       allow(Task).to receive_message_chain(:select, :where, :first) { double('Task', total_tasks: 1, task_concluded: 1) }
       expect(@project_service.completed_percent(project_id: @project_id)).to eq(100)
     end
-  end
+  end 
 end

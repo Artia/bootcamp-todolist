@@ -12,6 +12,11 @@ class  ProjectService < ApplicationService
     project.destroy
   end
 
+  def destroy
+    project = Project.find(params[:id])
+    project.destroy
+end
+
   private
 
   def find_project(project_id:)

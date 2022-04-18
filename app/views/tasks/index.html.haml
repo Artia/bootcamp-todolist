@@ -3,7 +3,7 @@
 %table.table
   %thead
     %tr
-      %th.col 🕧
+      %th.col.text-center 🕧
       %th.col Title
       %th.col Date start
       %th.col Date end
@@ -16,9 +16,9 @@
     - @tasks.each do |task|
       %tr
         - if task.is_task_late
-          %td{:class => 'bg-danger bg-gradient' }
+          %td{:class => 'bg-danger bg-gradient', "aria-label" => "Atrasado" }
         - else
-          %td{:class => 'bg-success bg-gradient' }
+          %td{:class => 'bg-success bg-gradient', "aria-label" => "No prazo"  }
         %td.align-middle= task.title
         %td.align-middle= task.human_date_start
         %td.align-middle= task.human_date_end

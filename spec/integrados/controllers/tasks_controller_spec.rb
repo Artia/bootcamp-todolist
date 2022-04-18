@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe TasksController, type: :controller do
+    
     let(:project) { Project.create(title: 'Testando Controller') }
     let(:task) { Task.create(title: 'Teste automatizado', date_start: Time.now, date_end: Time.now + 2.days, project_id: project.id)}
     
@@ -187,9 +188,7 @@ RSpec.describe TasksController, type: :controller do
                 end
 
                 it "valor de saida é concluida" do
-                    expect(task.reload).to  have_attributes(
-                        state: true
-                    )
+                    expect(task.reload.state).to eq(true)
                 end
 
                 it 'retorna mensagem de sucesso' do
@@ -199,14 +198,13 @@ RSpec.describe TasksController, type: :controller do
 
             context 'quando entrada é concluida' do
                 before do
-                    patch :update, params: {"task"=>{"title"=>"teste", "date_start"=>"2022-04-01T10:00", "date_end"=>"2022-04-15T11:00", "state"=>"1"}, "commit"=>"Save", "project_id"=>project.id, "id"=>task.id}
+                    task.state = true
+                    task.save
                     put :change_status, params: { project_id: project.id, task_id: task.id }
                 end
 
                 it "valor de saida é pendente" do
-                    expect(task.reload).to  have_attributes(
-                        state: false
-                    )
+                    expect(task.reload.state).to eq(false)
                 end
 
                 it 'retorna mensagem de sucesso' do
@@ -216,14 +214,13 @@ RSpec.describe TasksController, type: :controller do
             
             context 'quando entrada é pendente' do
                 before do
-                    patch :update, params: {"task"=>{"title"=>"teste", "date_start"=>"2022-04-01T10:00", "date_end"=>"2022-04-15T11:00", "state"=>"0"}, "commit"=>"Save", "project_id"=>project.id, "id"=>task.id}
+                    task.state = false
+                    task.save
                     put :change_status, params: { project_id: project.id, task_id: task.id }
                 end
 
                 it "valor de saida é concluida" do
-                    expect(task.reload).to  have_attributes(
-                        state: true,
-                    )
+                    expect(task.reload.state).to eq(true)
                 end
 
                 it 'retorna mensagem de sucesso' do

@@ -19,7 +19,7 @@ class Task < ApplicationRecord
   end
 
   def is_task_late
-    if self.date_end > Time.now - 3.hours || self.state == true
+    if self.date_end > Time.now || self.state == true
       return false
     end
     true

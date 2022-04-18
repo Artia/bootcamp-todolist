@@ -2,6 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update ]
   before_action :set_project
   after_action :update_percent_complete, only: [:create, :update, :destroy, :change_status]
+  
   # GET /tasks or /tasks.json
   def index
     @tasks = Task.where(project_id: @project.id)
@@ -22,12 +23,9 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
-    @task.project_id = @project.id
-    is_saved = task_service.create_task(@task)
-    if is_saved
+    @task = task_service.create_task(task_params:, project_id: @project.id)
+    if @task.save
       respond_to do |format|
-          task_service.create_task(@task)
           format.html { redirect_to project_task_url(@project, @task), notice: "Task was successfully created." }
           format.json { render :show, status: :created, location: @task }
       end
@@ -92,7 +90,7 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :date_start, :date_end, :state, :time_zone)
+      params.require(:task).permit(:title, :date_start, :date_end, :state, :timezone)
     end
 
     def set_project

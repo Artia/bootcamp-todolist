@@ -7,10 +7,10 @@
           %li= message
 
   .field
-    = f.label :title
-    = f.text_field :title
+    = f.label :title, class: 'form-label'
+    = f.text_field :title, class: 'form-field'
   .field
-    = f.label :completed_percent
-    = f.text_field :completed_percent
+    = f.label :completed_percent, class: 'form-label'
+    = f.text_field :completed_percent, class: 'form-field'
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', class: 'btn btn-success'

@@ -1,0 +1,29 @@
+%h1 Listing tasks
+
+%table
+  %thead
+    %tr
+      %th Title
+      %th Date start
+      %th Date end
+      %th State
+      %th Project
+      %th
+      %th
+      %th
+
+  %tbody
+    - @tasks.each do |task|
+      %tr
+        %td= task.title
+        %td= task.date_start
+        %td= task.date_end
+        %td= task.state
+        %td= task.project
+        %td= link_to 'Show', task
+        %td= link_to 'Edit', edit_task_path(task)
+        %td= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Task', new_task_path

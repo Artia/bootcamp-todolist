@@ -11,7 +11,7 @@
   = @task.date_end
 %p
   %b State:
-  = @task.state
+  = @task.human_state
 
 = link_to 'Edit', edit_project_task_path(@project, @task)
 \|

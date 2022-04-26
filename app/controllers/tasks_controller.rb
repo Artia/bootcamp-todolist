@@ -59,6 +59,22 @@ class TasksController < ApplicationController
     end
   end
 
+  def change_status
+    begin
+      task_service.change_status(task_id: params[:task_id].to_i)
+
+      respond_to do |format|
+        format.html { redirect_to project_tasks_url(@project), notice: "Task was successfully updated." } 
+        format.json { head :no_content}
+      end
+    rescue TaskNotFoundException => e
+      respond_to do |format|
+        format.html { redirect_to project_tasks_url(@project), notice: e.message }
+        format.json { { notice: e.message } } 
+      end
+    end
+  end 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
@@ -72,5 +88,9 @@ class TasksController < ApplicationController
 
     def set_project
       @project ||= Project.find_by(id: params[:project_id].to_i)
+    end
+
+    def task_service
+      @task_service ||= TaskService.new 
     end
 end

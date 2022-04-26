@@ -14,7 +14,7 @@
     - @projects.each do |project|
       %tr
         %td= project.title
-        %td= project.completed_percent
+        %td= number_to_percentage(project.completed_percent, delimiter: '.', separator: ',', precision: 2)
         %td= link_to 'Tasks', project_tasks_path(project), class: 'btn btn-outline-warning'
         %td= link_to 'Show', project, class: 'btn btn-outline-success'
         %td= link_to 'Edit', edit_project_path(project), class: 'btn btn-outline-primary'

@@ -14,12 +14,16 @@ class TaskService < ApplicationService
     def create(project_id:, params:)
         task = Task.new(params)
         task.project_id = project_id
+        project_service.update_percent_complete(project_id: project_id)
+
         task
     end
 
     def update(task:, params:)
         task = find_task(task_id: task.id)
         task.update(params)
+        project_service.update_percent_complete(project_id: project_id)
+
         task
     end
 

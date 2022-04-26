@@ -22,7 +22,6 @@ class TaskService < ApplicationService
     def update(task:, params:)
         task = find_task(task_id: task.id)
         task.update(params)
-        project_service.update_percent_complete(project_id: project_id)
 
         task
     end

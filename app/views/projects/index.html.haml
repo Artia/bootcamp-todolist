@@ -15,11 +15,11 @@
       %tr
         %td= project.title
         %td= project.completed_percent
-        %td= link_to 'Tasks', project_tasks_path(project)
-        %td= link_to 'Show', project
-        %td= link_to 'Edit', edit_project_path(project)
-        %td= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }
+        %td= link_to 'Tasks', project_tasks_path(project), class: 'btn btn-outline-warning'
+        %td= link_to 'Show', project, class: 'btn btn-outline-success'
+        %td= link_to 'Edit', edit_project_path(project), class: 'btn btn-outline-primary'
+        %td= link_to 'Destroy', project, data: { turbo_confirm: "Are you sure? Destroying '#{project.title}' will also destroy all dependant tasks.", turbo_method: :delete }, class: 'btn btn-outline-danger'
 
 %br
 
-= link_to 'New Project', new_project_path, class: 'btn btn-dark'
+= link_to 'New Project', new_project_path, class: 'btn btn-outline-dark'

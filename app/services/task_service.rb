@@ -4,6 +4,7 @@ class TaskService < ApplicationService
         raise TaskNotFoundException if task.blank?
         task = task_update(task, state: !task.state)
         task.save
+        project_service.update_percent_complete(project_id: task.project_id)
     end
 
     private
@@ -16,4 +17,8 @@ class TaskService < ApplicationService
         task.assign_attributes(args)
         task 
     end
+
+    def project_service
+        @project_service ||= ProjectService.new
+    end 
 end

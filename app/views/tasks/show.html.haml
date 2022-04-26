@@ -10,6 +10,9 @@
   %b Date end:
   = @task.date_end.strftime('%d/%m/%Y %H:%M')
 %p
+  %b Deadline:
+  = @task.deadline_validation
+%p
   %b State:
   = @task.human_state
 

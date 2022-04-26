@@ -10,6 +10,17 @@ class Task < ApplicationRecord
     self.state ? "Concluded" : "Pending"
   end
 
+  def deadline_validation
+    if self.state
+      "Yay, you completed! check State!"
+    elsif Time.now > self.date_end
+      "Overdue, get ready for your supervisor's call!"
+    else
+      @diff_hours = ((self.date_end.to_time - Time.now.to_time) / 3600).round
+      "No worries, you still have time. You have about #{@diff_hours} hours left ;)"
+    end 
+  end
+
   private
 
   def validate_dates

@@ -11,7 +11,7 @@ class TaskService < ApplicationService
         @task_controller ||= TaskController.new
     end
 
-    def create(params:, project_id:)
+    def create(project_id:, params:)
         task = Task.new(params)
         task.project_id = project_id
         task

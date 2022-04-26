@@ -7,6 +7,28 @@ class TaskService < ApplicationService
         project_service.update_percent_complete(project_id: task.project_id)
     end
 
+    def task_controller 
+        @task_controller ||= TaskController.new
+    end
+
+    def create(params:, project_id:)
+        task = Task.new(params)
+        task.project_id = project_id
+        task
+    end
+
+    def update(task:, params:)
+        task = find_task(task_id: task.id)
+        task.update(params)
+        task
+    end
+
+    def destroy(task:, project_id:)
+        task = find_task(task_id: task.id)
+        task.destroy
+        project_service.update_percent_complete(project_id: project_id)
+    end
+
     private
 
     def find_task(task_id:)

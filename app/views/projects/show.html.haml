@@ -5,7 +5,7 @@
   = @project.title
 %p
   %b Completed percent:
-  = number_to_percentage(@project.completed_percent, delimiter: '.', separator: ',', precision: 2)
+  = @project.completed_percent
 
 = link_to 'Edit', edit_project_path(@project), class: 'btn btn-outline-primary mt-2'
 \|

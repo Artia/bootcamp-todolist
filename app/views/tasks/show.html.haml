@@ -5,10 +5,10 @@
   = @task.title
 %p
   %b Date start:
-  = @task.date_start
+  = @task.date_start.strftime('%d/%m/%Y %H:%M')
 %p
   %b Date end:
-  = @task.date_end
+  = @task.date_end.strftime('%d/%m/%Y %H:%M')
 %p
   %b State:
   = @task.human_state

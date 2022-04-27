@@ -33,4 +33,27 @@ RSpec.describe Task, type: :model do
             end
         end
     end   
+
+    describe 'human_state' do
+        it 'state nil' do
+            expect(task.human_state).to eq("Pending")
+        end
+
+        it 'state false' do
+            task.stub(state: false) 
+            #task.state = false
+            expect(task.human_state).to eq("Pending")
+        end
+
+        it 'state true' do 
+            task.stub(state: true)
+            expect(task.human_state).to eq("Concluded")
+        end
+    end
+
+    describe 'deadline_validation' do
+        describe 'time.now > date_end' do
+            it { is_expected.to validate_presence_of(:date_end) }
+        end
+    end
 end

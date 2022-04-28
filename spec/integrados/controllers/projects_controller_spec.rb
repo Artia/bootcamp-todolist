@@ -34,7 +34,7 @@ RSpec.describe ProjectsController, type: :controller do
   describe 'POST#create' do
     context 'sucesso' do
       before do
-        @params = {"project"=>{"title"=>"Um projeto"}}
+        @params = { "project" => { "title" => "Um projeto" } }
       end
 
       it 'deve criar um registro' do
@@ -51,7 +51,7 @@ RSpec.describe ProjectsController, type: :controller do
 
     context 'erro' do
       before do
-        @params = {"project"=>{"title"=>""}}
+        @params = { "project" => { "title" => ""} }
       end
 
       it 'não deve criar um registro' do
@@ -103,7 +103,7 @@ RSpec.describe ProjectsController, type: :controller do
   describe 'PATCH#update' do
     context 'sucesso' do
       before do
-        @params = {"project"=>{"title"=>"Other Project"}, "commit"=>"Save", "id"=>project.id}
+        @params = { "project" => { "title" => "Other Project" }, "commit" => "Save", "id" => project.id }
         patch :update, params: @params
       end
 
@@ -121,7 +121,7 @@ RSpec.describe ProjectsController, type: :controller do
 
     context 'erro' do
       before do
-        @params = {"project"=>{"title"=>""}, "commit"=>"Save", "id"=>project.id}
+        @params = { "project" => { "title" => "" }, "commit" => "Save", "id" => project.id }
         patch :update, params: @params
       end
 

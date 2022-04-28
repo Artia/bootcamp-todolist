@@ -5,20 +5,20 @@
     %tr
       %th Title
       %th Completed percent
-      %th
-      %th
-      %th
-      %th
+      %th State
+      %th Project
+      %th Edit 
+      %th Destroy
 
   %tbody
     - @projects.each do |project|
       %tr
-        %td= project.title
-        %td= number_to_percentage(project.completed_percent, delimiter: '.', separator: ',', precision: 2)
-        %td= link_to 'Tasks', project_tasks_path(project), class: 'btn btn-outline-warning'
-        %td= link_to 'Show', project, class: 'btn btn-outline-success'
-        %td= link_to 'Edit', edit_project_path(project), class: 'btn btn-outline-primary'
-        %td= link_to 'Destroy', project, data: { turbo_confirm: "Are you sure? Destroying '#{project.title}' will also destroy all dependant tasks.", turbo_method: :delete }, class: 'btn btn-outline-danger'
+        %td= link_to "#{project.title}", project, class: 'btn btn-outline-dark'
+        %td= link_to "#{number_to_percentage(project.completed_percent, delimiter: '.', separator: ',', precision: 2)}", project_tasks_path(project), class: 'btn btn-outline-dark'
+        %td= link_to "Tasks", project_tasks_path(project), class: 'btn btn-outline-warning'
+        %td= link_to "Show", project, class: 'btn btn-outline-success'
+        %td= link_to "Edit", edit_project_path(project), class: 'btn btn-outline-primary'
+        %td= link_to "Destroy", project, data: { turbo_confirm: "Are you sure? Destroying '#{project.title}' will also destroy all dependant tasks.", turbo_method: :delete }, class: 'btn btn-outline-danger'
 
 %br
 

@@ -8,14 +8,14 @@
       %th Date end
       %th Deadline
       %th State
-      %th
-      %th
-      %th
+      %th Task
+      %th Edit
+      %th Destroy
 
   %tbody
     - @tasks.each do |task|
       %tr
-        %td= task.title
+        %td= link_to "#{task.title}", project_task_path(@project, task), class: 'btn btn-outline-dark'
         %td= task.date_start.strftime('%d/%m/%Y %H:%M')
         %td= task.date_end.strftime('%d/%m/%Y %H:%M')
         %td= task.deadline_validation
